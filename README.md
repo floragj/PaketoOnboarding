@@ -11,13 +11,14 @@ so feel free to dive as deep as you would like.
 
 Index:
 -
-- Task 0: Introduction & The Application Image
-- **Task 1: Paketo Artifacts Overview**
+- Task 0: Introduction and The Application Image
+- Task 1: **Paketo Artifacts Overview**
 - Task 2: Packaging a Buildpack
 - Task 3: Packaging a Metabuildpack
-- Task 4: Creating a Builder
-- Task 5: Rolling Your Own Buildpack
-- Task 6: The Packit Library
+- Task 4: Create a custom Metabuildpack
+- Task 5: Creating a Builder
+- Task 6: Rolling Your Own Implementation Buildpack
+- Task 7: The Packit Library
 
 
 ## Paketo Artifacts Overview
