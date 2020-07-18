@@ -1,4 +1,4 @@
-# Task 4: Creating a Metabuildpack
+# Task 5: Creating a Builder
 
 Welcome to the Paketo Buildpacks tutorial.
 
@@ -15,8 +15,8 @@ Index:
 - Task 1: Paketo Artifacts Overview
 - Task 2: Packaging a Buildpack
 - Task 3: Packaging a Metabuildpack
-- Task 4: **Create a custom Metabuildpack**
-- Task 5: Creating a Builder
+- Task 4: Create a custom Metabuildpack
+- Task 5: **Creating a Builder**
 - Task 6: Rolling Your Own Implementation Buildpack
 - Task 7: The Packit Library
 
@@ -27,88 +27,58 @@ For this task you will need a couple additional pieces of software
    - This is the CLI that orchestrates the running of each Paketo buildpack
  - [docker](https://docs.docker.com/get-docker/)
    - Provides an image registry on all platforms.
- - [sample_application](https://github.com/dwillist/onboarding_application)
-   - just a simple application nodejs application we are going to build
-   -    This app will be used throughout this tutorial so it is recommended that you use it
-- the BSD `tar` binary, everything will work with `gnutar`, though some flags may differ.
+ 
+ ## Creating a Builder
+ 
+ Here we are going to write the configuration files needed to create our own custom **Builder**. Recall a builder is a combination of buildpacks, and a stack. For this exercise we are going to use the `bionic` stack, which is maintained by the [Cloud Native Buildpacks Project](https://buildpacks.io/).
+ 
+ We will be using the following `pack` command to create a builder:
+ ```
+ pack create-builder <builder-name> -c <path/to/builder.toml>
+ ```
+ 
+ The general form of our `builder.toml` file is:
+ 
+ ``` toml
+ description = "Onboarding Builder"
+
+[[buildpacks]]
+image = "gcr.io/paketo-buildpacks/node-engine:1.2.3"
+version = "1.2.3"
+
+[[buildpacks]]
+image = "gcr.io/<image-org>/<image-name>:<version>"
+version = "<version>"
 
 
-## Packaging a Metabuildpack
-
-We are going to write a metabuildpack definition and use `pack` to turn it into a functional metabuildpack.
-
-
-We are going to need two files to do this, they are the `package.toml` file and a `metabuildpack.tgz` archive. Let's take a closer look at these.
-
-#### `metabuildpack.tgz`
-This is an archive containing a single `buildpack.toml` file at the archive root. This `buildpack.toml` file contains the ordering and group information for the metabuildpack.
-
-Here is an rough example of the `buildpack.toml` file in the `paketo-buildpack/nodejs`
-
-``` toml
-api = "0.2"
-
-[buildpack]
-  id = "paketo-buildpacks/nodejs"
-  name = "Node.js Buildpack"
+[[order]]
+  [[order.group]]
+  id = "paketo-buildpack/node-engine"
   version = "1.2.3"
 
-[[order]]
-
   [[order.group]]
-    id = "paketo-buildpacks/node-engine"
-    version = "1.2.3"
+  id = "<id from buildpack.toml>"
+  version = "<version>"
 
-  [[order.group]]
-    id = "paketo-buildpacks/yarn-install"
-    version = "1.2.3"
-
-[[order]]
-
-  [[order.group]]
-    id = "paketo-buildpacks/node-engine"
-    version = "1.2.3"
-
-  [[order.group]]
-    id = "paketo-buildpacks/npm"
-    version = "1.2.3"
-
-```
-
-Notice how the `orders` and `groups` in the above `toml` corresponds to the image used in Task 0.
-
-<img src="assets/metabuildpackage.png">
-
-#### `package.toml`
-
-This is a file, consumed by the `pack package-buildpack` command. It basically tells pack exactly where to find all of the buildpackages `buildpack.toml` file above, as well as a `uri` to the `metabuildpackage.tgz` archive.
-
-This file has contents similar to the following.
-``` toml
-[buildpack]
-  uri = "path/to/metabuildpack.tgz"
-
-[[dependencies]]
-  image = "gcr.io/paketo-buildpacks/node-engine:0.0.237"
-
-[[dependencies]]
-  image = "some/image/reference:version"
-
-
-```
-
-## Task
-
+# Stack that will be used by the builder
+[stack]
+id = "io.buildpacks.stacks.bionic"
+run-image = "gcr.io/paketo-buildpacks/run:base-cnb"
+build-image = "gcr.io/paketo-buildpacks/build:base-cnb"
+ ```
+ 
+ ## Task
+ 
 For this task we would like you to do the following,
 
-1) Create a `metabuildpack.tgz` archive that references the `node-engine` and `npm` implementation buildpacks.
-2) Create a `package.toml` file that uses the `metabuildpackage.tgz` created in step 1, and the `node-engine` and `npm` buildpackages.
-3) Create a custom metabuildpackage using the `pack package-buildpack` command with the `package.toml` created in step 2 
-4) Run a successful `pack build` of the `sample_application` using the metabuildpackage created in step 3.
+1) Create a builder using the `pack create-builder` command. This builder should only contain the `node-engine` and `npm` buildpacks.
+2) run a successful `pack build` of the `sample_application` using the builder created in step 1.
+3) Create a builder using the `pack create-builder` command. This builder should only contain the `nodejs` metabuildpack.
+4) run a successful `pack build` of the `sample_application` using the builder created in step 3.
+
+
 
 Hints:
 -
-- check out the current `nodejs metabuildpack` [`package.toml` file](https://github.com/paketo-buildpacks/nodejs/blob/master/package.toml)
--  check out the current `nodejs` metabuildpack [`buildpack.toml` file](https://github.com/paketo-buildpacks/nodejs/blob/master/buildpack.toml)
--  Again if really stuck check out the branch named `creating_a_metabuildpack_solution` for a walk through.
+-  Again if stuck check out the branch named `creating_a_builder_solution` for a walk through.
 
