@@ -2,8 +2,8 @@
 
 Welcome to the Paketo Buildpacks tutorial.
 
-This repository consists of a set of branches, 
-Each branch has a particular task designed to framiliarize 
+This repository consists of a set of branches,
+Each branch has a particular task designed to familiarize
 you with the Paketo Buildpacks project.
 
 Each subsequent task gets progressively more technical,
@@ -21,7 +21,7 @@ Index:
 - Task 7: The Packit Library
 
 
-Without further ado lets jump in.
+Without further ado let's jump in.
 
 ## The Application image
 
@@ -29,23 +29,24 @@ Without further ado lets jump in.
 
 For our purposes an application image is just a collection of layers. Each layer performs some addition (or deletion) to the filesystem. Each application image has three types of layers, an **app layer**, **dependency layers**, and an **OS layer**.
 
+
 <img src="assets/app_image.png" width="200">
 
-Notice the topology of the above image implies dependence. The application is dependent on the dependencies layers, and on the OS layer. While the dependencies layers are just relient on other lower dependency layers and the OS layer.
+Notice the topology of the above image implies dependence. The application is dependent on the dependencies layers, and on the OS layer. While the dependencies layers are just reliant on other lower dependency layers and the OS layer.
 
 The Paketo Buildpacks are responsible for providing the dependency layers, while the Paketo Stacks are responsible for the OS layer.
 
-With this image in mind lets walk through the steps for building an application image using the artifacts that the Paketo Buildpacks project produces.
+With this image in mind, let's walk through the steps for building an application image using the artifacts that the Paketo Buildpacks project produces.
 
 ## Prerequisites
 
-For this task you will need a couple additional peices of software
+For this task you will need a couple additional pieces of software
  - [pack](https://buildpacks.io/docs/install-pack/)
    - This is the CLI that orchestrates the running of each Paketo buildpack
  - [docker](https://docs.docker.com/get-docker/)
-   - Provides a image registry on all platforms.
+   - Provides an image registry on all platforms.
  - [sample_application](https://github.com/dwillist/onboarding_application)
-   - just a simple application nodejs application we are going to build 
+   - just a simple application nodejs application we are going to build
    - This app will be used throughout this tutorial so it is recommended that you use it
 
 
@@ -58,7 +59,7 @@ We are going to is just build the same application into an app-image using `pack
 
 
 ##  Using a Builder
-Given that you have installed the above pre-requisites and started the docker daemon. We can now set up pack to use a Paketo Buildpacks Builder.
+Given that you have installed the above pre-requisites and started the docker daemon. We can now set up `pack` to use a Paketo Buildpacks Builder.
 
 list all recommended builders:
 
@@ -66,7 +67,7 @@ list all recommended builders:
 pack list-trusted-builder
 ```
 
-For this tutrorial we are going to use the `gcr.io/paketo-buildpacks/builders:base` builder.
+For this tutorial we are going to use the `gcr.io/paketo-buildpacks/builders:base` builder.
 To set this as the default we run
 
 ```
@@ -78,7 +79,7 @@ Ok great! Now from the root of the `sample_application` cloned as a prerequisite
 pack build onboarding-test-image
 ```
 
-After a bit of output our build succeeds and we have produced an application image. Running 
+After a bit of output our build succeeds and we have produced an application image. Running
 ```
 docker images
 ```
@@ -86,11 +87,11 @@ lists all images and we will see that indeed the `onboarding-test-image` applica
 
 ## Using a metabuildpackage
 
-A **metabuildpackage** is a artifact consisting of a group of buildpackages and an order that they should be excuted in.
+A **metabuildpackage** is an artifact consisting of a group of buildpackages and an order that they should be executed in.
 
-We `pack build` using a specific **metabuildpackage** 
+We `pack build` using a specific **metabuildpackage**
 
-This time lets build our application using the `gcr.io/paketo-buildpacks/nodejs` metabuildpackage, which contains the `node-engine`, `npm` and `yarn` implementation buildpackages. 
+This time let's build our application using the `gcr.io/paketo-buildpacks/nodejs` metabuildpackage, which contains the `node-engine`, `npm` and `yarn` implementation buildpackages.
 
 this is as simple as sitting in the root of the `sample_application`
 ```
@@ -105,5 +106,3 @@ Note: ordering of the implementation buildpackages matters
 ```
 pack build implementation-build-test --buildpack gcr.io/paketo-buildpacks/nodejs --buildpack gcr.io/paketo-buildpacks/npm
 ```
-
-
