@@ -29,8 +29,7 @@ Without further ado lets jump in.
 
 For our purposes an application image is just a collection of layers. Each layer performs some addition (or deletion) to the filesystem. Each application image has three types of layers, an **app layer**, **dependency layers**, and an **OS layer**.
 
-
-![](assets/app_image.png =300x)
+<img src="assets/app_image.png" width="200">
 
 Notice the topology of the above image implies dependence. The application is dependent on the dependencies layers, and on the OS layer. While the dependencies layers are just relient on other lower dependency layers and the OS layer.
 
