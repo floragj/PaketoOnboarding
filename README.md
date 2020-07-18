@@ -20,12 +20,6 @@ Index:
 - Task 6: Rolling Your Own Implementation Buildpack
 - Task 7: The Packit Library
 
-## Packaging a Buildpack
-
-Ok, this is the first task where we will ask you the reader to complete a task, with a few hints (hopefully helpful). We will be trying to accomplish the following.
-
-Build the sample application using the versions of the `node-engine` and `npm` buildpacks that you package, up from source.
-
 ## Prerequisites
 
 For this task you will need a couple additional pieces of software
@@ -37,7 +31,6 @@ For this task you will need a couple additional pieces of software
    - just a simple application nodejs application we are going to build
    -    This app will be used throughout this tutorial so it is recommended that you use it
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-    - likely you system has this installed
 - [paketo-buildpacks/node-engine repository](https://github.com/paketo-buildpacks/node-engine)
     - this can be clone by running
     ```git clone https://github.com/paketo-buildpacks/node-engine```
@@ -47,10 +40,16 @@ For this task you will need a couple additional pieces of software
 
 ## Packaging a Buildpack
 
-For this task we would like you to do the following,
- 1) run a successful `pack build` of the `sample_application` using the `node-engine` and `npm` **buildpack archives** that you package.
+Ok, this is the first task where we will ask you the reader to complete a task, with a few hints (hopefully helpful)
 
- 2) run a successful `pack build` of the `sample_application` using the `node-engine` and `npm` **buildpackage images** that you package.
+## Packaging a Buildpack
+
+For this task we would like you to do the following,
+ 1) package the `node-engine` and `npm` buildpacks from source into both `buildpackages` and `buildpacks` (should be a single command)
+
+ 2) run a successful `pack build` of the `sample_application` using the `node-engine` and `npm` **buildpack archives** that you packaged in step 1.
+
+ 3) run a successful `pack build` of the `sample_application` using the `node-engine` and `npm` **buildpackage images** that you packaged in step 1.
 
 Hints:
 -
