@@ -66,8 +66,8 @@ func TestDetect(t *testing.T) {
 			when("when application has no package.json", func() {
 				it("fails detection", func() {
 					exitStatus, err := detector.DetectFunction(platformPath, planPath, appPath)
-					Expect(exitStatus).To(Equal(100))
 					Expect(err).NotTo(HaveOccurred())
+					Expect(exitStatus).To(Equal(100))
 				})
 			})
 
@@ -88,8 +88,8 @@ func TestDetect(t *testing.T) {
 				})
 				it("passes detection", func() {
 					exitStatus, err := detector.DetectFunction(platformPath, planPath, appPath)
-					Expect(exitStatus).To(Equal(0))
 					Expect(err).NotTo(HaveOccurred())
+					Expect(exitStatus).To(Equal(0))
 
 					contents, err := ioutil.ReadFile(planPath)
 					Expect(err).NotTo(HaveOccurred())
@@ -112,8 +112,8 @@ func TestDetect(t *testing.T) {
 				})
 				it("fails detection", func() {
 					exitStatus, err := detector.DetectFunction(platformPath, planPath, appPath)
-					Expect(exitStatus).To(Equal(100))
 					Expect(err).NotTo(HaveOccurred())
+					Expect(exitStatus).To(Equal(100))
 				})
 			})
 		})
